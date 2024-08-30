@@ -1,0 +1,17 @@
+{
+  "service": {
+    "name": "platform-service",
+    "version": "v1",
+    "port": "4000",
+    "host": "http://localhost"
+  },
+  "db": {
+    "uri": "mongodb+srv://jcruz:dkGlRHyE2iarIlDm@manuela-cluster.o11c7eh.mongodb.net/",
+    "name": "manuela-db"
+  },
+  "jwt": {
+    "secretToken": "c716cb786259e65af0111448bc8e58628503a38bd4f3ba2fd701fea1fcff8c646406f0c3e2fe2f0448d3f2172da0947ce4cb621ae61ef976f0d8f2c30b7a0d1a",
+    "refreshTokenSecret": "236b7121e0b0742279518fee4db35a13faf9668c7500f5cbf8ad44571395741d",
+    "expiration": "24h"
+  }
+}
