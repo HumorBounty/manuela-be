@@ -6,6 +6,9 @@ import { addFeedbackController } from "../controllers/feedback/add-feedback";
 import { addPostController } from "../controllers/posts/add-post";
 import { getPostsListController } from "../controllers/posts/get-posts-list";
 import { uploadFilesController } from "../controllers/posts/upload-files";
+import { addProductController } from "../controllers/products/add-product";
+import { getProductController } from "../controllers/products/get-product";
+import { getProductsListController } from "../controllers/products/get-products-list";
 import { editProfileDetailsController } from "../controllers/profile/edit-profile-details";
 import { editProfileImageController } from "../controllers/profile/edit-profile-image";
 import { editUserRoleController } from "../controllers/users/edit-user-role";
@@ -57,6 +60,14 @@ router.post(
   upload,
   makeExpressCallback(uploadFilesController)
 );
+
+// Product API
+router.get("/product/list", makeExpressCallback(getProductsListController));
+router.get(
+  "/product/list/:productId",
+  makeExpressCallback(getProductController)
+);
+router.post("/product/add", makeExpressCallback(addProductController));
 
 // Profile API
 router.patch(
