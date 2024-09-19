@@ -8,23 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongodb_1 = require("mongodb");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const url = process.env.MONGO_URI;
-const dbName = process.env.MONGO_DB_NAME;
-const client = new mongodb_1.MongoClient(url);
-function database() {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log("db is connected.");
-        yield client.connect();
-        const db = client.db(dbName);
-        return db;
-    });
-}
-exports.default = database;
-//# sourceMappingURL=index.js.map
+const user_1 = require("../../database/user");
+const jwt_1 = require("../../helpers/jwt");
+const getUserRoleService = (accessToken) => __awaiter(void 0, void 0, void 0, function* () {
+    const tokenDetails = (yield (0, jwt_1.getTokenDetails)(accessToken));
+    if (!tokenDetails)
+        throw new Error("Unauthorized");
+    try {
+        const res = yield (0, user_1.getUserRole)(tokenDetails.userId);
+        if (!res)
+            throw new Error("No user role");
+        return { res, err: null };
+    }
+    catch (err) {
+        return { err, res: null };
+    }
+});
+exports.default = getUserRoleService;
+//# sourceMappingURL=get-user-role.js.map

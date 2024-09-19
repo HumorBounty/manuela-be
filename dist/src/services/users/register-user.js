@@ -21,7 +21,10 @@ const registerUserService = (request, type) => __awaiter(void 0, void 0, void 0,
     // #1. Hash password
     const hashedPassword = yield (0, bcrypt_1.hash)({ plainPassword: request.password });
     // #2 Create user payload
-    const newUser = (0, user_2.createUser)(Object.assign(Object.assign({}, request), { createdAt: new Date(), password: hashedPassword }));
+    const newUser = (0, user_2.createUser)(Object.assign(Object.assign({}, request), { role: {
+            isBusinessAccount: false,
+            type: "BASIC",
+        }, createdAt: new Date(), password: hashedPassword }));
     // #3 Check if there's an existing email
     const existingUser = yield (0, user_1.getUserByEmailQuery)(newUser.email);
     if (existingUser) {

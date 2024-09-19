@@ -5,7 +5,6 @@ const database = makeDb();
 
 export const saveUser = async (user: any) => {
   const db = await database;
-  const role = await db.collection("role").findOne({ name: "user" });
   let userExist;
 
   if (user._id) {
@@ -17,9 +16,7 @@ export const saveUser = async (user: any) => {
   let result;
 
   if (!userExist) {
-    result = await db
-      .collection("users")
-      .insertOne({ role: role?.name, ...user });
+    result = await db.collection("users").insertOne({ ...user });
   } else {
     result = {
       acknowledged: true,
@@ -31,6 +28,28 @@ export const saveUser = async (user: any) => {
     success: !!result.acknowledged,
     insertedId: result.insertedId,
   };
+};
+
+export const editUserRole = async ({
+  userId,
+  role,
+}: {
+  userId: string;
+  role: {
+    isBusinessAccount: boolean;
+    type: string;
+  };
+}) => {
+  const db = await database;
+  const result = await db.collection("users").updateOne(
+    { _id: new ObjectId(userId) },
+    {
+      $set: {
+        role,
+      },
+    }
+  );
+  return result;
 };
 
 export const getUsersList = async () => {
@@ -52,7 +71,6 @@ export const editUsername = async ({ userId, username }: any) => {
     .updateOne({ _id: new ObjectId(userId) }, { $set: { username } });
   return result;
 };
-
 
 export const getUserByEmailQuery = async (email: string) => {
   const db = await database;
@@ -99,4 +117,12 @@ export const getTokenQuery = async (userId: string) => {
     userId: new ObjectId(userId),
   });
   return result;
+};
+
+export const getUserRole = async (userId: string) => {
+  const db = await database;
+  const result = await db.collection("users").findOne({
+    _id: new ObjectId(userId),
+  });
+  return result?.role;
 };

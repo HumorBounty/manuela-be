@@ -1,6 +1,10 @@
 export interface User {
   firstName: string;
   lastName: string;
+  role: {
+    isBusinessAccount: boolean;
+    type: string;
+  };
   email: string;
   username?: string;
   name?: string;

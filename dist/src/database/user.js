@@ -23,13 +23,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTokenQuery = exports.removeTokenQuery = exports.storeTokenQuery = exports.insertUserProfile = exports.getUserByEmailQuery = exports.editUsername = exports.getUserQuery = exports.getUsersList = exports.saveUser = void 0;
+exports.getUserRole = exports.getTokenQuery = exports.removeTokenQuery = exports.storeTokenQuery = exports.insertUserProfile = exports.getUserByEmailQuery = exports.editUsername = exports.getUserQuery = exports.getUsersList = exports.editUserRole = exports.saveUser = void 0;
 const mongodb_1 = require("mongodb");
 const index_1 = __importDefault(require("./index"));
 const database = (0, index_1.default)();
 const saveUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const db = yield database;
-    const role = yield db.collection("role").findOne({ name: "user" });
     let userExist;
     if (user._id) {
         userExist = yield db
@@ -38,9 +37,7 @@ const saveUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
     let result;
     if (!userExist) {
-        result = yield db
-            .collection("users")
-            .insertOne(Object.assign({ role: role === null || role === void 0 ? void 0 : role.name }, user));
+        result = yield db.collection("users").insertOne(Object.assign({}, user));
     }
     else {
         result = {
@@ -54,6 +51,16 @@ const saveUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     };
 });
 exports.saveUser = saveUser;
+const editUserRole = ({ userId, role, }) => __awaiter(void 0, void 0, void 0, function* () {
+    const db = yield database;
+    const result = yield db.collection("users").updateOne({ _id: new mongodb_1.ObjectId(userId) }, {
+        $set: {
+            role,
+        },
+    });
+    return result;
+});
+exports.editUserRole = editUserRole;
 const getUsersList = () => __awaiter(void 0, void 0, void 0, function* () {
     const db = yield database;
     const query = {};
@@ -115,4 +122,12 @@ const getTokenQuery = (userId) => __awaiter(void 0, void 0, void 0, function* ()
     return result;
 });
 exports.getTokenQuery = getTokenQuery;
+const getUserRole = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const db = yield database;
+    const result = yield db.collection("users").findOne({
+        _id: new mongodb_1.ObjectId(userId),
+    });
+    return result === null || result === void 0 ? void 0 : result.role;
+});
+exports.getUserRole = getUserRole;
 //# sourceMappingURL=user.js.map

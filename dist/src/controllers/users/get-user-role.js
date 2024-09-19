@@ -12,17 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUserController = void 0;
-const constants_1 = __importDefault(require("../../helpers/constants"));
+exports.getUserRoleController = void 0;
 const http_return_1 = require("../../helpers/http-return");
-const login_user_1 = __importDefault(require("../../services/users/login-user"));
-const loginUserController = (httpRequest) => __awaiter(void 0, void 0, void 0, function* () {
+const get_user_role_1 = __importDefault(require("../../services/users/get-user-role"));
+const getUserRoleController = (httpRequest) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { res, err } = yield (0, login_user_1.default)(httpRequest.body);
+        const { res, err } = yield (0, get_user_role_1.default)(httpRequest.headers.authorization);
         if (res) {
             return (0, http_return_1.makeHttpSuccess)({
                 statusCode: 200,
-                message: constants_1.default.LOGIN_SUCCESS,
+                message: "User role fetched successfully!",
                 data: res,
             });
         }
@@ -38,5 +37,5 @@ const loginUserController = (httpRequest) => __awaiter(void 0, void 0, void 0, f
         });
     }
 });
-exports.loginUserController = loginUserController;
-//# sourceMappingURL=login-user.js.map
+exports.getUserRoleController = getUserRoleController;
+//# sourceMappingURL=get-user-role.js.map

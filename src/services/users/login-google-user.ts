@@ -21,7 +21,6 @@ const loginGoogleService = async (request: GoogleSigninRequest) => {
         username,
         password: "test",
         type: "google",
-        role: "USER",
         thumbnailImage: constants.DEFAULT_USER_IMAGE,
         originalImage: constants.DEFAULT_USER_IMAGE,
         isVerified: 1,

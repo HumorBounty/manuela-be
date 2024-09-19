@@ -11,6 +11,10 @@ const registerUserService = async (request: any, type: "sso" | "email") => {
   // #2 Create user payload
   const newUser = createUser({
     ...request,
+    role: {
+      isBusinessAccount: false,
+      type: "BASIC",
+    },
     createdAt: new Date(),
     password: hashedPassword,
   });

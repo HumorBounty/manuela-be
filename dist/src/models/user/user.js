@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = void 0;
 const createUser = (payload) => {
-    const { firstName, lastName, email, username, password, type, isVerified, createdAt } = payload;
+    const { firstName, role, lastName, email, username, password, type, isVerified, createdAt, } = payload;
     // Validate required fields
     if (!email) {
         throw new Error("email is required.");
@@ -16,6 +16,7 @@ const createUser = (payload) => {
     return {
         firstName,
         lastName,
+        role,
         username,
         email,
         password,

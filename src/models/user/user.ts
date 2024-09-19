@@ -1,8 +1,17 @@
 import { User } from "./user-interfaces";
 
 export const createUser = (payload: User) => {
-  const { firstName, lastName, email, username, password, type, isVerified, createdAt } =
-    payload;
+  const {
+    firstName,
+    role,
+    lastName,
+    email,
+    username,
+    password,
+    type,
+    isVerified,
+    createdAt,
+  } = payload;
 
   // Validate required fields
   if (!email) {
@@ -20,6 +29,7 @@ export const createUser = (payload: User) => {
   return {
     firstName,
     lastName,
+    role,
     username,
     email,
     password,

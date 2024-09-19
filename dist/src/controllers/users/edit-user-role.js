@@ -12,13 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUserController = void 0;
+exports.editUserRoleController = void 0;
 const constants_1 = __importDefault(require("../../helpers/constants"));
 const http_return_1 = require("../../helpers/http-return");
-const login_user_1 = __importDefault(require("../../services/users/login-user"));
-const loginUserController = (httpRequest) => __awaiter(void 0, void 0, void 0, function* () {
+const edit_user_role_1 = __importDefault(require("../../services/users/edit-user-role"));
+const editUserRoleController = (httpRequest) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { res, err } = yield (0, login_user_1.default)(httpRequest.body);
+        const { res, err } = yield (0, edit_user_role_1.default)({
+            accessToken: httpRequest.headers.authorization,
+            requestType: httpRequest.body.requestType,
+        });
         if (res) {
             return (0, http_return_1.makeHttpSuccess)({
                 statusCode: 200,
@@ -38,5 +41,5 @@ const loginUserController = (httpRequest) => __awaiter(void 0, void 0, void 0, f
         });
     }
 });
-exports.loginUserController = loginUserController;
-//# sourceMappingURL=login-user.js.map
+exports.editUserRoleController = editUserRoleController;
+//# sourceMappingURL=edit-user-role.js.map

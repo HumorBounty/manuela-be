@@ -1,17 +1,18 @@
 import constants from "../../helpers/constants";
 import { makeHttpError, makeHttpSuccess } from "../../helpers/http-return";
-import loginUserService from "../../services/users/login-user";
+import editUserRoleService from "../../services/users/edit-user-role";
 import {
   HttpRequest,
   ServiceError,
   ServiceResponse,
 } from "../../utils/global-interfaces";
 
-export const loginUserController = async (httpRequest: HttpRequest) => {
+export const editUserRoleController = async (httpRequest: HttpRequest) => {
   try {
-    const { res, err }: ServiceResponse = await loginUserService(
-      httpRequest.body
-    );
+    const { res, err }: ServiceResponse = await editUserRoleService({
+      accessToken: httpRequest.headers.authorization,
+      requestType: httpRequest.body.requestType,
+    });
 
     if (res) {
       return makeHttpSuccess({

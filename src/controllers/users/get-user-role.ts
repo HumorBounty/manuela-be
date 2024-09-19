@@ -1,22 +1,21 @@
-import constants from "../../helpers/constants";
 import { makeHttpError, makeHttpSuccess } from "../../helpers/http-return";
-import loginUserService from "../../services/users/login-user";
+import getUserRoleService from "../../services/users/get-user-role";
 import {
   HttpRequest,
   ServiceError,
   ServiceResponse,
 } from "../../utils/global-interfaces";
 
-export const loginUserController = async (httpRequest: HttpRequest) => {
+export const getUserRoleController = async (httpRequest: HttpRequest) => {
   try {
-    const { res, err }: ServiceResponse = await loginUserService(
-      httpRequest.body
+    const { res, err }: ServiceResponse = await getUserRoleService(
+      httpRequest.headers.authorization
     );
 
     if (res) {
       return makeHttpSuccess({
         statusCode: 200,
-        message: constants.LOGIN_SUCCESS,
+        message: "User role fetched successfully!",
         data: res,
       });
     }

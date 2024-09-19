@@ -33,7 +33,6 @@ const loginGoogleService = (request) => __awaiter(void 0, void 0, void 0, functi
                 username,
                 password: "test",
                 type: "google",
-                role: "USER",
                 thumbnailImage: constants_1.default.DEFAULT_USER_IMAGE,
                 originalImage: constants_1.default.DEFAULT_USER_IMAGE,
                 isVerified: 1,
